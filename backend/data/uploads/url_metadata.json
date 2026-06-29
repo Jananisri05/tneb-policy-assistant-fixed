@@ -1,0 +1,46 @@
+{
+  "03cb0a4d-0f47-4964-9236-c002bd395dcc": {
+    "id": "03cb0a4d-0f47-4964-9236-c002bd395dcc",
+    "url": "https://www.tantransco.org/en/tantransco/",
+    "label": "Tantransco",
+    "chunk_count": 6,
+    "ingested_at": "2026-06-22T10:02:44.463454",
+    "last_refreshed_at": null,
+    "doc_type": "url",
+    "added_by": "admin",
+    "adder_ip": "127.0.0.1"
+  },
+  "80fcb4e1-44b2-4359-bafc-097455f18c35": {
+    "id": "80fcb4e1-44b2-4359-bafc-097455f18c35",
+    "url": "https://www.tngecl.org/en/greenenergy/",
+    "label": "tngecl",
+    "chunk_count": 14,
+    "ingested_at": "2026-06-22T12:15:18.833003",
+    "last_refreshed_at": null,
+    "doc_type": "url",
+    "added_by": "admin",
+    "adder_ip": "127.0.0.1"
+  },
+  "5ef82338-b33e-4b66-bad2-ec8d837eb407": {
+    "id": "5ef82338-b33e-4b66-bad2-ec8d837eb407",
+    "url": "https://en.wikipedia.org/wiki/Renewable_energy?utm_source=chatgpt.com",
+    "label": "renewable energy",
+    "chunk_count": 588,
+    "ingested_at": "2026-06-22T12:47:38.509069",
+    "last_refreshed_at": null,
+    "doc_type": "url",
+    "added_by": "admin",
+    "adder_ip": "127.0.0.1"
+  },
+  "33d386ae-a6fe-4244-9d96-a881e8da1afb": {
+    "id": "33d386ae-a6fe-4244-9d96-a881e8da1afb",
+    "url": "https://en.wikipedia.org/wiki/TNEB",
+    "label": "tneb",
+    "chunk_count": 45,
+    "ingested_at": "2026-06-23T19:30:18.701369",
+    "last_refreshed_at": null,
+    "doc_type": "url",
+    "added_by": "admin",
+    "adder_ip": "2405:201:e03d:f0fc:e401:7c0a:a42b:eacf"
+  }
+}

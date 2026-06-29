@@ -1,0 +1,61 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --navy:#f5f7fa;
+  --panel:#ffffff;
+  --surface:#ffffff;
+  --surface2:#f8fafc;
+  --surface3:#eef2f7;
+  --border:#d9e2ec;
+  --border2:#cbd5e1;
+  --cyan:#003366;
+  --cyan-dim:#0b5cab;
+  --cyan-glow:rgba(0,51,102,.08);
+  --cyan-glow2:rgba(0,51,102,.15);
+  --text:#1f2937;
+  --text2:#334155;
+  --muted:#64748b;
+  --muted2:#94a3b8;
+  --success:#2e7d32;
+  --warning:#ed6c02;
+  --danger:#c62828;
+  --info:#1565c0;
+  --font-body:Arial,sans-serif;
+  --font-mono:Consolas,monospace;
+  --sidebar-width:280px;
+}
+
+html, body, #root {
+  height: 100%;
+  background: var(--navy);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border2); }
+
+button { cursor: pointer; font-family: var(--font-body); }
+input, textarea { font-family: var(--font-mono); }
+a { color: var(--cyan); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
