@@ -45,3 +45,4 @@ backend/data/vectorstore/
 
 # VS Code
 .vscode/
+backend/data/
