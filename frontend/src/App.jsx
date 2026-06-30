@@ -174,7 +174,7 @@ function AppShell({ isAdmin, currentUser, onAdminLogout, onAdminLogin }) {
     let cancelled = false
     async function fetchRecent() {
       try {
-        const res = await fetch('http://localhost:8000/api/v1/documents/recent')
+        const res = await fetch('https://tneb-policy-assistant-fixed-production.up.railway.app/api/v1/documents/recent')
         if (!res.ok || cancelled) return
         const data = await res.json()
         const recent = data.documents || []

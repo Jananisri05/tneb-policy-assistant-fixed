@@ -79,6 +79,7 @@ app.add_middleware(
         "http://localhost:5174",
         "https://frontend-self-ten-83.vercel.app",
         "https://tneb-policy-assistant-fixed-production.up.railway.app",
+        "https://tneb-policy-assistant-fixed-esu8.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
