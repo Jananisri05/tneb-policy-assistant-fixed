@@ -45,6 +45,7 @@ chmod +x start.sh
 ```
 
 Or manually:
+
 ```bash
 cd backend
 python3 -m venv venv
@@ -65,6 +66,7 @@ chmod +x start.sh
 ```
 
 Or manually:
+
 ```bash
 cd frontend
 npm install
@@ -83,19 +85,20 @@ Frontend runs at: http://localhost:5173
 
 ## Features
 
-| Feature | Description |
-|---------|-------------|
-| Document upload | PDF, DOCX, TXT support with progress indicator |
-| Q&A mode | Conversational answers with citation |
-| Policy search | Keyword/semantic search across all documents |
-| Summarize | Brief, detailed, or bullet-point summaries |
-| Source panel | View exact retrieved chunks and relevance scores |
-| Scoped search | Filter queries to specific documents |
-| Conversation history | Last 3 turns sent for context |
+| Feature              | Description                                      |
+| -------------------- | ------------------------------------------------ |
+| Document upload      | PDF, DOCX, TXT support with progress indicator   |
+| Q&A mode             | Conversational answers with citation             |
+| Policy search        | Keyword/semantic search across all documents     |
+| Summarize            | Brief, detailed, or bullet-point summaries       |
+| Source panel         | View exact retrieved chunks and relevance scores |
+| Scoped search        | Filter queries to specific documents             |
+| Conversation history | Last 3 turns sent for context                    |
 
 ## API Reference
 
 ### Upload Document
+
 ```
 POST /api/v1/documents/upload
 Content-Type: multipart/form-data
@@ -103,6 +106,7 @@ Body: file=<file>
 ```
 
 ### Ask a Question
+
 ```
 POST /api/v1/query/
 {
@@ -114,6 +118,7 @@ POST /api/v1/query/
 ```
 
 ### Summarize
+
 ```
 POST /api/v1/query/summarize
 {
@@ -124,15 +129,15 @@ POST /api/v1/query/summarize
 
 ## Configuration (.env)
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| ANTHROPIC_API_KEY | required | Your Claude API key |
-| CLAUDE_MODEL | claude-sonnet-4-6 | LLM model to use |
-| EMBED_MODEL | all-MiniLM-L6-v2 | Sentence transformer model |
-| CHUNK_SIZE | 800 | Characters per text chunk |
-| CHUNK_OVERLAP | 150 | Overlap between chunks |
-| TOP_K_RESULTS | 5 | Chunks retrieved per query |
-| MAX_UPLOAD_SIZE_MB | 20 | Upload size limit |
+| Variable           | Default           | Description                |
+| ------------------ | ----------------- | -------------------------- |
+| ANTHROPIC_API_KEY  | required          | Your Claude API key        |
+| CLAUDE_MODEL       | claude-sonnet-4-6 | LLM model to use           |
+| EMBED_MODEL        | all-MiniLM-L6-v2  | Sentence transformer model |
+| CHUNK_SIZE         | 800               | Characters per text chunk  |
+| CHUNK_OVERLAP      | 150               | Overlap between chunks     |
+| TOP_K_RESULTS      | 5                 | Chunks retrieved per query |
+| MAX_UPLOAD_SIZE_MB | 20                | Upload size limit          |
 
 ## Project Structure
 
@@ -165,4 +170,15 @@ tneb-policy-assistant/
     │   ├── hooks/useDocs.js     # Document state management
     │   └── services/api.js      # Axios API client
     └── vite.config.js
+---
+title: TNEB PolicyAI
+emoji: ⚡
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
+
+# TNEB PolicyAI
+AI-powered policy assistant for TNEB employees.
 ```
