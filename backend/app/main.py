@@ -78,14 +78,13 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:5174",
         "https://frontend-self-ten-83.vercel.app",
-        "https://tneb-policy-assistant-fixed-production.up.railway.app",
         "https://tneb-policy-assistant-fixed-esu8.vercel.app",
     ],
+    allow_origin_regex=r"https://.*\.vercel\.app",  # covers ALL vercel preview URLs
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 app.include_router(auth.router, prefix="/api/v1")
 app.include_router(documents.router, prefix="/api/v1")
 app.include_router(query.router, prefix="/api/v1")
