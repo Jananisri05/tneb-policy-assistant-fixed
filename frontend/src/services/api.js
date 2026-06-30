@@ -55,6 +55,6 @@ export const queryApi = {
 export const urlApi = {
   getAll: () => api.get('/api/v1/urls/'),
   add: (url, label) => api.post('/api/v1/urls/', { url, label: label || null }),
-  delete: (urlId) => api.delete(`/api/v1/urls/${urlId}/`),
+  delete: (urlId) => api.delete(`/api/v1/urls/${urlId}`),
   refresh: (urlId) => api.post(`/api/v1/urls/${urlId}/refresh/`),
 }
