@@ -66,6 +66,7 @@ app = FastAPI(
     version="1.0.0",
     description="TNEB Policy Knowledge Assistant",
     lifespan=lifespan,
+    redirect_slashes=False,  # add this
 )
 
 # Middleware — order matters: MaxBodySize must be before CORS
