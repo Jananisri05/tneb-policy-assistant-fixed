@@ -46,7 +46,7 @@ export const docApi = {
 
 export const queryApi = {
   query: (data) => api.post('/api/v1/query/', data),
-  summarize: (docId, summaryType) => api.post('/api/v1/query/summarize/', {
+  summarize: (docId, summaryType) => api.post('/api/v1/query/summarize', {
     document_id: docId,
     summary_type: summaryType,
   }),
