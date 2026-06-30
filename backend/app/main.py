@@ -80,6 +80,7 @@ app.add_middleware(
         "http://localhost:5174",
         "https://frontend-self-ten-83.vercel.app",
         "https://tneb-policy-assistant-fixed-esu8.vercel.app",
+        "https://jananisri-tneb-policyai.hf.space",
     ],
     allow_origin_regex=r"https://.*\.vercel\.app",  # covers ALL vercel preview URLs
     allow_credentials=True,
@@ -113,7 +114,12 @@ def health_check():
             embedding_model=settings.EMBED_MODEL,
             llm_model=settings.GROQ_MODEL,
         )
+from fastapi.staticfiles import StaticFiles
+import os
 
+# Serve React frontend
+if os.path.exists("static"):
+    app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 @app.get("/")
 def root():

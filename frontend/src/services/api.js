@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-const API_BASE = "https://tneb-policy-assistant-fixed-production.up.railway.app"
-
+const API_BASE = "https://jananisri-tneb-policyai.hf.space"
 const NGROK_HEADER = { 'ngrok-skip-browser-warning': 'true' }
 
 const api = axios.create({
