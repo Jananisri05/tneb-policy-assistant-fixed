@@ -24,7 +24,8 @@ api.interceptors.request.use(
 )
 
 export const authApi = {
-  login: (username, password) => api.post('/api/v1/auth/login/', { username, password }),
+  // Remove trailing slash from login
+login: (username, password) => api.post('/api/v1/auth/login', { username, password }),
 }
 
 export const docApi = {
