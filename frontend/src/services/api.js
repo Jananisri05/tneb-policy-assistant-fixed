@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000/api/v1'
+const API_BASE = "tneb-policy-assistant-fixed-production.up.railway.app"
 
 const NGROK_HEADER = { 'ngrok-skip-browser-warning': 'true' }
 
