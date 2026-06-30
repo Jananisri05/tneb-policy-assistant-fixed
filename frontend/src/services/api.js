@@ -24,15 +24,15 @@ api.interceptors.request.use(
 )
 
 export const authApi = {
-  login: (username, password) => api.post('/auth/login', { username, password }),
+  login: (username, password) => api.post('/api/v1/auth/login', { username, password }),
 }
 
 export const docApi = {
-  getAll: () => api.get('/documents').then(r => ({ data: r.data || [] })),
+  getAll: () => api.get('/api/v1/documents').then(r => ({ data: r.data || [] })),
   upload: (file, onProgress) => {
     const formData = new FormData()
     formData.append('file', file)
-    return api.post('/documents/upload', formData, {
+    return api.post('/api/v1/documents/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data', ...NGROK_HEADER },
       onUploadProgress: (progressEvent) => {
         if (onProgress && progressEvent.total) {
@@ -41,19 +41,20 @@ export const docApi = {
       },
     })
   },
-  delete: (docId) => api.delete(`/documents/${docId}`),
+  delete: (docId) => api.delete(`/api/v1/documents/${docId}`),
 }
+
 export const queryApi = {
-  query: (data) => api.post('/query', data),
-  summarize: (docId, summaryType) => api.post('/query/summarize', {
+  query: (data) => api.post('/api/v1/query', data),
+  summarize: (docId, summaryType) => api.post('/api/v1/query/summarize', {
     document_id: docId,
     summary_type: summaryType,
   }),
 }
 
 export const urlApi = {
-  getAll: () => api.get('/urls/'),
-  add: (url, label) => api.post('/urls/', { url, label: label || null }),
-  delete: (urlId) => api.delete(`/urls/${urlId}`),
-  refresh: (urlId) => api.post(`/urls/${urlId}/refresh`),
+  getAll: () => api.get('/api/v1/urls/'),
+  add: (url, label) => api.post('/api/v1/urls/', { url, label: label || null }),
+  delete: (urlId) => api.delete(`/api/v1/urls/${urlId}`),
+  refresh: (urlId) => api.post(`/api/v1/urls/${urlId}/refresh`),
 }
