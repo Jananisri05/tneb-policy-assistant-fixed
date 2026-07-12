@@ -41,7 +41,7 @@ export const docApi = {
       },
     })
   },
-  delete: (docId) => api.delete(`/api/v1/documents/${docId}/`),
+  delete: (docId) => api.delete(`/api/v1/documents/${docId}`),
 }
 
 export const queryApi = {
