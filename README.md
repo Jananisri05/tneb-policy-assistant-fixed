@@ -44,9 +44,7 @@ The system is built as a full-stack RAG application: documents are parsed, chunk
 | Document Chunking | LangChain |
 | PDF Parsing | PyMuPDF (+ Groq vision fallback for scanned PDFs) |
 | Frontend | React (Vite) |
-| Database | MongoDB Atlas |
-| Deployment Server | Node.js / Express (serves frontend + backend together) |
-| Hosting | Render |
+
 
 ---
 
@@ -60,10 +58,10 @@ The system is built as a full-stack RAG application: documents are parsed, chunk
                                                                 │
                         ┌───────────────────────────────────────┼───────────────────────────┐
                         ▼                                       ▼                            ▼
-                ┌───────────────┐                      ┌────────────────┐          ┌──────────────────┐
-                │   ChromaDB    │                      │  MongoDB Atlas │          │     Groq API      │
-                │ (vector store)│                      │ (users, meta)  │          │ (LLM + vision OCR)│
-                └───────────────┘                      └────────────────┘          └──────────────────┘
+                ┌───────────────┐                      ┌────────────────┐          
+                │   ChromaDB    │                      │ Groq API       │
+                │ (vector store)│                      │
+                └───────────────┘                      └────────────────┘          
 ```
 
 **Ingestion flow:** Document/URL → PyMuPDF (or Groq vision for scans) → LangChain chunking → SentenceTransformer embeddings → ChromaDB
