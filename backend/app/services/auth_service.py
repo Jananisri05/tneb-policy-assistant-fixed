@@ -1,4 +1,4 @@
-import os
+﻿import os
 import json
 import uuid
 import hashlib
@@ -19,11 +19,11 @@ AUDIT_LOG_FILE = os.path.join(DATA_DIR, "audit_logs.json")
 
 SESSION_TTL_HOURS = 8
 
-# ─── In-memory caches (persist for process lifetime) ─────────────────────────
+# --- In-memory caches (persist for process lifetime) ---------------------
 # Eliminates disk reads on every request. Written through to disk on mutation.
-_sessions_cache: Optional[dict] = None   # token → session data
-_admins_cache: Optional[dict] = None     # admin_id → admin data
-# ─────────────────────────────────────────────────────────────────────────────
+_sessions_cache: Optional[dict] = None   # token -> session data
+_admins_cache: Optional[dict] = None     # admin_id -> admin data
+# ---------------------------------------------------------------------------
 
 
 def _ensure_data_dir():
@@ -54,7 +54,7 @@ def _save_json_file(filepath: str, data: dict):
         json.dump(data, f, indent=2, default=str)
 
 
-# ─── Admins (cached) ─────────────────────────────────────────────────────────
+# --- Admins (cached) -------------------------------------------------------
 
 def _load_admins() -> dict:
     global _admins_cache
@@ -69,7 +69,7 @@ def _save_admins(admins: dict):
     _save_json_file(ADMIN_FILE, admins)
 
 
-# ─── Sessions (cached) ────────────────────────────────────────────────────────
+# --- Sessions (cached) -------------------------------------------------------
 
 def _load_sessions() -> dict:
     global _sessions_cache
@@ -94,14 +94,14 @@ def _cleanup_expired_sessions(sessions: dict) -> dict:
     }
 
 
-# ─── Audit log (fire-and-forget, non-blocking) ───────────────────────────────
+# --- Audit log (fire-and-forget, non-blocking) -----------------------------
 # Audit writes are async-friendly: we buffer them and only write to disk
 # on login / logout (high-value events). Token verifications are NOT logged
 # to avoid hammering disk on every API call.
 
 def log_admin_action(admin_username: str, action: str, details: str = None, ip_address: str = None):
     """Log admin action. Skips disk write for high-frequency verify calls."""
-    # Skip logging token verifications entirely — they happen on every request
+    # Skip logging token verifications entirely - they happen on every request
     if action == "token_verify":
         return
 
@@ -131,18 +131,25 @@ def seed_default_admin():
     admins = _load_admins()
     if not admins:
         admin_id = str(uuid.uuid4())
+        default_password = os.getenv("DEFAULT_ADMIN_PASSWORD")
+        if not default_password:
+            logger.error(
+                "DEFAULT_ADMIN_PASSWORD not set - skipping admin seed. "
+                "Set this env var (as a Secret) and restart."
+            )
+            return
         admins[admin_id] = {
             "id": admin_id,
-            "username": "admin",
+            "username": os.getenv("DEFAULT_ADMIN_USERNAME", "admin"),
             "email": "admin@tneb.gov.in",
             "full_name": "TNEB Administrator",
-            "password_hash": _hash_password("admin@123"),
+            "password_hash": _hash_password(default_password),
             "created_at": datetime.utcnow().isoformat(),
             "last_login": None,
             "is_active": True
         }
         _save_admins(admins)
-        logger.info("Default admin created — username: admin, password: admin@123")
+        logger.info(f"Default admin created - username: {admins[admin_id]['username']}")
         log_admin_action("system", "admin_created", "Default admin created", "127.0.0.1")
 
 
@@ -182,7 +189,7 @@ def login_admin(username: str, password: str, ip_address: str = None) -> Optiona
 
 
 def verify_token(token: str) -> Optional[dict]:
-    """Return session data if token is valid and not expired. Uses in-memory cache — no disk read."""
+    """Return session data if token is valid and not expired. Uses in-memory cache - no disk read."""
     if not token:
         return None
     sessions = _load_sessions()          # returns cache after first load
