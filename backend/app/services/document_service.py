@@ -1,4 +1,4 @@
-import os
+﻿import os
 import uuid
 import json
 import base64
@@ -187,7 +187,7 @@ class DocumentService:
                 "document_name": original_name,
                 "page_number": c["page_number"],
                 "chunk_index": c["chunk_index"],
-                "doc_type": "policy",          # ← ADDED
+                "doc_type": "policy",          # â† ADDED
             }
             for c in all_chunks
         ]
@@ -238,15 +238,15 @@ class DocumentService:
         query_embedding = self.embedder.encode([query]).tolist()
         where_filter = {"doc_id": {"$in": document_ids}} if document_ids else None
 
-        # FIX 2: Fetch 3× more candidates from ChromaDB so URL chunks (which
+        # FIX 2: Fetch 3Ã— more candidates from ChromaDB so URL chunks (which
         # have fewer total chunks than large PDFs) get a fair chance to surface
-        # in the top-K. We then return all of them to the LLM — the LLM's
+        # in the top-K. We then return all of them to the LLM â€” the LLM's
         # context window handles the extra load fine at these sizes.
-        n_fetch = min(top_k * 3, self.collection.count() or 1)   # ← CHANGED
+        n_fetch = min(top_k * 3, self.collection.count() or 1)   # â† CHANGED
 
         results = self.collection.query(
             query_embeddings=query_embedding,
-            n_results=n_fetch,                                     # ← CHANGED
+            n_results=n_fetch,                                     # â† CHANGED
             where=where_filter,
             include=["documents", "metadatas", "distances"],
         )
