@@ -50,8 +50,12 @@ def _load_json_file(filepath: str, default=None) -> dict:
 
 def _save_json_file(filepath: str, data: dict):
     _ensure_data_dir()
-    with open(filepath, "w") as f:
+    tmp_path = filepath + ".tmp"
+    with open(tmp_path, "w") as f:
         json.dump(data, f, indent=2, default=str)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp_path, filepath)
 
 
 # --- Admins (cached) -------------------------------------------------------
