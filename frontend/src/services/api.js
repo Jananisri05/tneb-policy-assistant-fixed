@@ -1,4 +1,4 @@
-import axios from 'axios'
+﻿import axios from 'axios'
 
 const API_BASE = "https://januasokann-tneb-policyai.hf.space"
 const NGROK_HEADER = { 'ngrok-skip-browser-warning': 'true' }
@@ -20,6 +20,17 @@ api.interceptors.request.use(
     return config
   },
   (error) => Promise.reject(error)
+)
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('admin_token')
+      window.location.href = '/login'
+    }
+    return Promise.reject(error)
+  }
 )
 
 export const authApi = {
