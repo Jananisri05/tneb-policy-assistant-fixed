@@ -115,20 +115,23 @@ def health_check():
             llm_model=settings.GROQ_MODEL,
         )
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import os
 
-if os.path.exists("static"):
-    app.mount("/", StaticFiles(directory="static", html=True), name="static")
+if os.path.exists("static/assets"):
+    app.mount("/assets", StaticFiles(directory="static/assets"), name="assets")
 
-@app.get("/")
-def root():
+@app.get("/{full_path:path}")
+async def spa_fallback(full_path: str):
+    index_path = "static/index.html"
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
     return {
         "message": "TNEB PolicyAI API",
         "version": "1.0.0",
         "docs": "/docs",
         "health": "/api/v1/health",
     }
-
 
 if __name__ == "__main__":
     import uvicorn
