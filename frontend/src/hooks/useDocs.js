@@ -10,12 +10,12 @@ export function useDocs() {
   const [uploadQueue, setUploadQueue] = useState([])
   const [lastUploaded, setLastUploaded] = useState(null)
   const [error, setError] = useState(null)
-
-  useEffect(() => {
+useEffect(() => {
+  if (localStorage.getItem('admin_token')) {
     loadDocs()
     loadUrls()
-  }, [])
-
+  }
+}, [])
   const loadDocs = async () => {
     setLoading(true)
     try {
