@@ -3,7 +3,7 @@ import asyncio
 from functools import lru_cache
 from typing import List, Optional
 
-from groq import AsyncGroq
+from openai import AsyncOpenAI
 
 from app.config import settings
 from app.models.schemas import (
@@ -15,8 +15,33 @@ from app.services.document_service import get_document_service
 
 logger = logging.getLogger(__name__)
 
-# ─── Async Groq client — non-blocking IO ─────────────────────────────────────
-client = AsyncGroq(api_key=settings.GROQ_API_KEY)
+client = AsyncOpenAI(
+    api_key=settings.OPENROUTER_API_KEY,
+    base_url="https://openrouter.ai/api/v1",
+)
+
+
+async def _call_llm_with_fallback(messages, temperature=0.2, max_tokens=1024):
+    try:
+        response = await client.chat.completions.create(
+            model=settings.OPENROUTER_MODEL,
+            extra_body={"models": settings.openrouter_fallback_list},
+            messages=messages,
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        answer = response.choices[0].message.content
+        tokens = None
+        try:
+            if response.usage:
+                tokens = response.usage.prompt_tokens + response.usage.completion_tokens
+        except Exception:
+            pass
+        return answer, tokens
+    except Exception as e:
+        logger.error("All OpenRouter models (primary + fallbacks) failed: %s", e)
+        raise RuntimeError(f"LLM call failed after trying all configured models: {e}")
+
 
 # ─── Prompts ──────────────────────────────────────────────────────────────────
 
@@ -292,23 +317,14 @@ that part "Inference". Do not describe your reasoning process or use step labels
 
     messages = _build_chat_messages(conversation_history, user_prompt)
 
-    logger.info("Calling Groq API async (mode=%s, chunks=%d, follow_up=%s)",
+    logger.info("Calling OpenRouter API async (mode=%s, chunks=%d, follow_up=%s)",
                 mode, len(chunks), search_query != query)
 
-    response = await client.chat.completions.create(
-        model=settings.GROQ_MODEL,
+    answer, tokens = await _call_llm_with_fallback(
         messages=messages,
         temperature=0.2,
         max_tokens=1024,
     )
-
-    answer = response.choices[0].message.content
-    tokens = None
-    try:
-        if response.usage:
-            tokens = response.usage.prompt_tokens + response.usage.completion_tokens
-    except Exception:
-        pass
 
     return QueryResponse(
         answer=answer,
@@ -341,8 +357,7 @@ async def summarize_document(
 
     logger.info("Summarizing %s (%s), chunks=%d", doc_info.original_name, summary_type, len(selected_chunks))
 
-    response = await client.chat.completions.create(
-        model=settings.GROQ_MODEL,
+    summary_text, _ = await _call_llm_with_fallback(
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": prompt},
@@ -353,7 +368,7 @@ async def summarize_document(
 
     return SummarizeResponse(
         document_name=doc_info.original_name,
-        summary=response.choices[0].message.content,
+        summary=summary_text,
         summary_type=summary_type,
         chunks_processed=len(selected_chunks),
     )
