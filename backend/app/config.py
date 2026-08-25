@@ -5,9 +5,18 @@ import json
 
 
 class Settings(BaseSettings):
-    GROQ_API_KEY: str
-    GROQ_MODEL: str = "llama-3.3-70b-versatile"
-    EMBED_MODEL: str = "all-MiniLM-L6-v2"
+    OPENROUTER_API_KEY: str = ""
+    OPENROUTER_MODEL: str = "meta-llama/llama-3.3-70b-instruct:free"
+    OPENROUTER_FALLBACKS: str = (
+        "qwen/qwen-2.5-72b-instruct:free,"
+        "deepseek/deepseek-r1:free,"
+        "google/gemini-2.0-flash-exp:free,"
+        "meta-llama/llama-4-maverick:free"
+    )
+
+    @property
+    def openrouter_fallback_list(self) -> list[str]:
+        return [m.strip() for m in self.OPENROUTER_FALLBACKS.split(",") if m.strip()]
     CHROMA_DB_PATH: str = "/app/data/vectorstore"
     UPLOAD_DIR: str = "/app/data/uploads"
     MAX_UPLOAD_SIZE_MB: int = 100
